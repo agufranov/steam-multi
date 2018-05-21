@@ -9,6 +9,11 @@ class Bridge {
         userId: response.success === 1 ? response.steamid : null
       }))
   }
+
+  getUserInfo(userId) {
+    return this.steamApi.getPlayerSummaries(userId)
+      .then(({ response }) => response.players.player[0])
+  }
 }
 
 module.exports = Bridge;

@@ -24,6 +24,11 @@ class SteamAPI {
   getSchemaForGame(gameId) {
     return this.req(`GetSchemaForGame/v0002`, { gameId })
   }
+
+  getPlayerSummaries(steamids) {
+    const steamidsStr = Array.isArray(steamids) ? steamids.join(',') : steamids;
+    return this.req(`GetPlayerSummaries/v0001`, { steamids: steamidsStr });
+  }
 }
 
 module.exports = SteamAPI;

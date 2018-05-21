@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import * as _ from 'lodash';
+import Player from './Player';
 
 @observer
 export default class PlayerInput extends React.Component {
-  @observable inputText = 'a';
+  @observable inputText = '';
   counter = 0;
 
   @action
@@ -26,6 +27,10 @@ export default class PlayerInput extends React.Component {
     this.inputText = '';
   }
 
+  onPlayerDelete = (player) => {
+    this.props.store.deletePlayer(player);
+  }
+
   render() {
     return (
       <div>
@@ -43,7 +48,7 @@ export default class PlayerInput extends React.Component {
           ) : null}
         </form>
         {this.props.store.players.map(player => (
-          <div key={player.userId}>{player.username} [{player.userId}]</div>
+          <Player player={player} onDelete={this.onPlayerDelete}/>
         ))}
       </div>
     )

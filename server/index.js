@@ -12,14 +12,16 @@ const bridge = new Bridge(steamApi);
 const request = (method, params) => {
   const paramsStr = Object.keys(params).map(k => `${k}=${params[k]}`).join('&');
   const url = `${baseUrl}${method}?key=${apiKey}&${paramsStr}`;
-  console.log(url);
   return fetch(url)
     .then(res => res.json())
 }
 
-
 app.get('/getUserId', (req, res) => {
   bridge.getUserId(req.query.username).then(res.json.bind(res));
+});
+
+app.get('/getUserInfo', (req, res) => {
+  bridge.getUserInfo(req.query.userId).then(res.json.bind(res));
 });
 
 app.listen(3000);

@@ -10,11 +10,20 @@ export default class AppModel {
   addPlayer(username) {
     this.getUserId(username)
       .then(({ userId }) => {
-        if (!_.find(this.players, { userId })) {
-          this.players.push({ userId, username });
+        if (_.find(this.players, { userId })) {
+          throw new Error('User already has been added');
         }
+        return this.getUserInfo(userId)
+      })
+      .then((player) => {
+          this.players.push({ ...player, userId: player.steamid, username });
         this.inputState = 'EMPTY';
       });
+  }
+
+  @action
+  deletePlayer(player) {
+    _.pull(this.players, player);
   }
 
   @action
@@ -45,6 +54,8 @@ export default class AppModel {
   }
 
   getUserId = (username) => this.request('getUserId', { username });
+
+  getUserInfo = (userId) => this.request('getUserInfo', { userId });
 
   getOwnedGames = (userId) => this.request('getOwnedGames', { userId });
 }

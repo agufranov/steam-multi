@@ -6,6 +6,10 @@ export default class AppModel {
   @observable inputState = 'EMPTY';
   inputRequestCounter = 0;
 
+  @computed get playersCount() {
+    return this.players.length;
+  }
+
   @action
   addPlayer(username) {
     this.getSteamId(username)
@@ -16,13 +20,14 @@ export default class AppModel {
         return this.getPlayerInfo(steamid)
       })
       .then((player) => {
-          this.players.push({ ...player, username });
+          this.players.push({ ...player, username, steamid: player.info.steamid });
         this.inputState = 'EMPTY';
       });
   }
 
   @action
-  deletePlayer(player) {
+  deletePlayer = (steamid) => {
+    const player = _.find(this.players, { steamid });
     _.pull(this.players, player);
   }
 

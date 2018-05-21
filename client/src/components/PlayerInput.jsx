@@ -27,10 +27,6 @@ export default class PlayerInput extends React.Component {
     this.inputText = '';
   }
 
-  onPlayerDelete = (player) => {
-    this.props.store.deletePlayer(player);
-  }
-
   render() {
     return (
       <div>
@@ -47,8 +43,9 @@ export default class PlayerInput extends React.Component {
             <span>User already added</span>
           ) : null}
         </form>
+        <button disabled={this.props.store.playersCount < 2} onClick={this.props.store.search}>Find games</button>
         {this.props.store.players.map(player => (
-          <Player key={player.steamid} player={player} onDelete={this.onPlayerDelete}/>
+          <Player key={player.info.steamid} player={player} onDelete={this.props.store.deletePlayer}/>
         ))}
       </div>
     )

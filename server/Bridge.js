@@ -11,11 +11,22 @@ class Bridge {
   }
 
   getPlayerInfo(steamid) {
-    return this.steamApi.getPlayerSummaries(steamid)
-      .then(({ response }) => response.players.player[0])
+    return Promise.all([
+      this.steamApi.getPlayerSummaries(steamid),
+      this.steamApi.getOwnedGames(steamid)
+    ])
+      .then(([playerSummaries, ownedGames]) => ({
+        info: playerSummaries.response.players.player[0],
+        ownedGames: ownedGames.response.games
+      }))
   }
 
-  getGames(steamid) {
+  getPlayerGames(steamid) {
+    return this.steamApi.getOwnedGames(steamid)
+      .then(({ response }) => {
+        console.log(response);
+        return Promise.all(response.games.map(({ appid }) => this.steamApi.getSchemaForGame(appid)));
+      });
   }
 }
 

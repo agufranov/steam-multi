@@ -10,9 +10,12 @@ class Bridge {
       }))
   }
 
-  getUserInfo(steamid) {
+  getPlayerInfo(steamid) {
     return this.steamApi.getPlayerSummaries(steamid)
       .then(({ response }) => response.players.player[0])
+  }
+
+  getGames(steamid) {
   }
 }
 

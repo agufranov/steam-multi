@@ -20,8 +20,8 @@ app.get('/getSteamId', (req, res) => {
   bridge.getSteamId(req.query.username).then(res.json.bind(res));
 });
 
-app.get('/getUserInfo', (req, res) => {
-  bridge.getUserInfo(req.query.steamid).then(res.json.bind(res));
+app.get('/getPlayerInfo', (req, res) => {
+  bridge.getPlayerInfo(req.query.steamid).then(res.json.bind(res));
 });
 
 app.listen(3000);

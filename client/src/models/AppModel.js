@@ -11,9 +11,9 @@ export default class AppModel {
     this.getSteamId(username)
       .then(({ steamid }) => {
         if (_.find(this.players, { steamid })) {
-          throw new Error('User already has been added');
+          throw new Error('Player already has been added');
         }
-        return this.getUserInfo(steamid)
+        return this.getPlayerInfo(steamid)
       })
       .then((player) => {
           this.players.push({ ...player, username });
@@ -55,7 +55,7 @@ export default class AppModel {
 
   getSteamId = (username) => this.request('getSteamId', { username });
 
-  getUserInfo = (steamid) => this.request('getUserInfo', { steamid });
+  getPlayerInfo = (steamid) => this.request('getPlayerInfo', { steamid });
 
   getOwnedGames = (steamid) => this.request('getOwnedGames', { steamid });
 }

@@ -19,11 +19,7 @@ class SteamAPI {
   }
 
   getOwnedGames(steamid) {
-    return this.req(`IPlayerService/GetOwnedGames/v0001`, { steamid })
-  }
-
-  getSchemaForGame(appid) {
-    return this.req(`ISteamUserStats/GetSchemaForGame/v0002`, { appid })
+    return this.req(`IPlayerService/GetOwnedGames/v0001`, { steamid, include_appinfo: 1 })
   }
 
   getPlayerSummaries(steamids) {

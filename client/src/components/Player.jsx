@@ -12,6 +12,7 @@ class Player extends React.Component {
     return (
       <div>
         <h3>{player.info.realname} <i>({player.username}) [{player.steamid}]</i></h3>
+        <u>{player.ownedGames.length} games</u>
         <img src={player.info.avatar}/>
         <button onClick={this.onDelete}>Remove</button>
       </div>

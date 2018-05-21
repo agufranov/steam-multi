@@ -17,7 +17,7 @@ class Bridge {
     ])
       .then(([playerSummaries, ownedGames]) => ({
         info: playerSummaries.response.players.player[0],
-        ownedGames: ownedGames.response.games
+        ownedGames: ownedGames.response.games || []
       }))
   }
 

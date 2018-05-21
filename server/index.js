@@ -16,12 +16,12 @@ const request = (method, params) => {
     .then(res => res.json())
 }
 
-app.get('/getUserId', (req, res) => {
-  bridge.getUserId(req.query.username).then(res.json.bind(res));
+app.get('/getSteamId', (req, res) => {
+  bridge.getSteamId(req.query.username).then(res.json.bind(res));
 });
 
 app.get('/getUserInfo', (req, res) => {
-  bridge.getUserInfo(req.query.userId).then(res.json.bind(res));
+  bridge.getUserInfo(req.query.steamid).then(res.json.bind(res));
 });
 
 app.listen(3000);

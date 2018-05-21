@@ -48,7 +48,7 @@ export default class PlayerInput extends React.Component {
           ) : null}
         </form>
         {this.props.store.players.map(player => (
-          <Player player={player} onDelete={this.onPlayerDelete}/>
+          <Player key={player.steamid} player={player} onDelete={this.onPlayerDelete}/>
         ))}
       </div>
     )

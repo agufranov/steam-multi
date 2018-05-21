@@ -8,15 +8,15 @@ export default class AppModel {
 
   @action
   addPlayer(username) {
-    this.getUserId(username)
-      .then(({ userId }) => {
-        if (_.find(this.players, { userId })) {
+    this.getSteamId(username)
+      .then(({ steamid }) => {
+        if (_.find(this.players, { steamid })) {
           throw new Error('User already has been added');
         }
-        return this.getUserInfo(userId)
+        return this.getUserInfo(steamid)
       })
       .then((player) => {
-          this.players.push({ ...player, userId: player.steamid, username });
+          this.players.push({ ...player, username });
         this.inputState = 'EMPTY';
       });
   }
@@ -38,12 +38,12 @@ export default class AppModel {
     }
     const currentInputRequestCounter = ++this.inputRequestCounter;
     this.inputState = 'LOADING';
-    this.getUserId(username)
-      .then(({ userId }) => {
+    this.getSteamId(username)
+      .then(({ steamid }) => {
         if (currentInputRequestCounter !== this.inputRequestCounter) {
           return;
         }
-        this.inputState = userId !== null ? 'FOUND' : 'NOT_FOUND';
+        this.inputState = steamid !== null ? 'FOUND' : 'NOT_FOUND';
       });
   }
 
@@ -53,9 +53,9 @@ export default class AppModel {
       .then(response => response.json());
   }
 
-  getUserId = (username) => this.request('getUserId', { username });
+  getSteamId = (username) => this.request('getSteamId', { username });
 
-  getUserInfo = (userId) => this.request('getUserInfo', { userId });
+  getUserInfo = (steamid) => this.request('getUserInfo', { steamid });
 
-  getOwnedGames = (userId) => this.request('getOwnedGames', { userId });
+  getOwnedGames = (steamid) => this.request('getOwnedGames', { steamid });
 }

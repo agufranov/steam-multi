@@ -3,15 +3,15 @@ class Bridge {
     this.steamApi = steamApi;
   }
 
-  getUserId(username) {
+  getSteamId(username) {
     return this.steamApi.resolveVanityUrl(username)
       .then(({ response }) => ({
-        userId: response.success === 1 ? response.steamid : null
+        steamid: response.success === 1 ? response.steamid : null
       }))
   }
 
-  getUserInfo(userId) {
-    return this.steamApi.getPlayerSummaries(userId)
+  getUserInfo(steamid) {
+    return this.steamApi.getPlayerSummaries(steamid)
       .then(({ response }) => response.players.player[0])
   }
 }
